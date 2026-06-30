@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question...</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@400;500&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #121016;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .step {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.8s ease-in-out;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .step.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cat-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.2);
+        }
+
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            color: #ff4d6d;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 0.95rem;
+            color: #b0a8b9;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #ff8fa3;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            position: relative;
+            justify-content: center;
+            min-height: 60px;
+            width: 100%;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .primary-btn, .yes-btn {
+            background: linear-gradient(135deg, #ff4d6d, #c9184a);
+            color: white;
+            box-shadow: 0 4px 15px rgba(201, 24, 74, 0.4);
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #2d6a4f, #1b4332);
+            box-shadow: 0 4px 15px rgba(45, 106, 79, 0.4);
+        }
+
+        .no-btn {
+            background-color: #2b2735;
+            color: #ffffff;
+            position: absolute;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .heart {
+            font-size: 5rem;
+            color: #ff4d6d;
+            animation: pulse 1.5s infinite;
+            margin: 20px 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="step1" class="step active">
+        <img src="cute cat2.jpg" alt="Cute Cat" class="cat-img">
+        <h1>I have something<br>special to tell you...</h1>
+        <p>Something that will change everything 🌸</p>
+        <button class="primary-btn" onclick="nextStep(2)">🤍 Tap to Begin</button>
+    </div>
+
+    <div id="step2" class="step">
+        <img src="sad cat .jpg.webp" alt="Sad Cat" class="cat-img">
+        <h2>Be honest with me...</h2>
+        <p>This is important to me 💕</p>
+        <h3>Do you trust me?</h3>
+        <div class="btn-container">
+            <button class="yes-btn" onclick="nextStep(3)">Yes, I do ✔️</button>
+            <button class="no-btn" id="no1" onmouseover="moveButton('no1')">No 😔</button>
+        </div>
+    </div>
+
+    <div id="step3" class="step">
+        <img src="3.gif" alt="Cat with Flower" class="cat-img">
+        <h2>One more thing...</h2>
+        <p>I need to know this 🥺</p>
+        <h3>Do you also love me?</h3>
+        <div class="btn-container">
+            <button class="yes-btn" onclick="nextStep(4)">Yes, I love you! 💖</button>
+            <button class="no-btn" id="no2" onmouseover="moveButton('no2')">No 😔</button>
+        </div>
+    </div>
+
+    <div id="step4" class="step">
+        <img src="flork heart.jpg" alt="Flork Heart" class="cat-img">
+        <h2>Last question, I promise!</h2>
+        <p>This one is the most important 🌟</p>
+        <h3>Will you be mine forever?</h3>
+        <div class="btn-container">
+            <button class="yes-btn" onclick="nextStep(5)">Yes, forever! ✨</button>
+            <button class="no-btn" id="no3" onmouseover="moveButton('no3')">Let me think... 🤔</button>
+        </div>
+    </div>
+
+    <div id="step5" class="step">
+        <h2>You made me the happiest!</h2>
+        <p>Thank you for saying yes 💖<br>I promise to love you forever and always...</p>
+        <div class="heart">❤️</div>
+        <button class="primary-btn" onclick="location.reload()">Replay All 🔄</button>
+    </div>
+
+    <script>
+        // Set initial positions for the "No" buttons so they line up properly before running away
+        window.onload = () => {
+            const noBtns = document.querySelectorAll('.no-btn');
+            noBtns.forEach(btn => {
+                btn.style.left = '55%'; // Position it next to the Yes button initially
+            });
+        };
+
+        function nextStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            // Show the target step
+            document.getElementById('step' + step).classList.add('active');
+        }
+
+        function moveButton(id) {
+            const btn = document.getElementById(id);
+            const container = btn.parentElement;
+            
+            // Calculate random positions within the container bounds
+            const maxX = container.clientWidth - btn.clientWidth;
+            const maxY = container.clientHeight > 100 ? container.clientHeight : 150; // give it room to dodge
+
+            const randomX = Math.floor(Math.random() * maxX);
+            // Allow it to move up and down in a 150px radius to dodge the cursor
+            const randomY = Math.floor(Math.random() * maxY) - (maxY / 2); 
+
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        }
+    </script>
+</body>
+</html>
